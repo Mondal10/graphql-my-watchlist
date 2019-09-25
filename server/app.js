@@ -6,7 +6,8 @@ const app = express();
 
 // Creating middleware
 app.use('/graphql', graphqlHTTP({
-    schema
+    schema,
+    graphiql: true
 }));
 
 // Listen port
