@@ -6,14 +6,17 @@ const {
     GraphQLString,
     GraphQLID,
     GraphQLInt,
+    GraphQLList,
     GraphQLSchema } = graphql;
 
 // Dummy data
 const books = [
-    { name: 'Immortals of Meluha', genre: 'fiction', id: '1' },
-    { name: 'The Secret', genre: 'personal development', id: '2' },
-    { name: 'blah blah', genre: 'brruuuuu', id: '3' },
-    { name: 'blooh blooh', genre: 'trruuuuu', id: '4' },
+    { name: 'Immortals of Meluha', genre: 'fiction', id: '1', authorId: '1' },
+    { name: 'The Secret', genre: 'personal development', id: '2', authorId: '2' },
+    { name: 'blah blah', genre: 'brruuuuu', id: '3', authorId: '3' },
+    { name: 'blooh blooh', genre: 'trruuuuu', id: '4', authorId: '4' },
+    { name: 'holaaa', genre: 'horror', id: '5', authorId: '3' },
+    { name: 'BHOLLAAA', genre: 'Comedy', id: '6', authorId: '4' },
 ];
 
 const authors = [
@@ -28,7 +31,14 @@ const BookType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
-        genre: { type: GraphQLString }
+        genre: { type: GraphQLString },
+        author: {
+            type: AuthorType,
+            resolve(parent, args) {
+                // Parent(This Object) is BookType
+                return _.find(authors, { id: parent.authorId });
+            }
+        }
     })
 });
 
@@ -37,13 +47,26 @@ const AuthorType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
-        age: { type: GraphQLInt }
+        age: { type: GraphQLInt },
+        book: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                // Parent(This Object) is AuthorType
+                return _.filter(books, { authorId: parent.id });
+            }
+        }
     })
 });
 
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                return books;
+            }
+        },
         book: {
             type: BookType,
             args: {
@@ -51,7 +74,13 @@ const RootQuery = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 // Code to get data from DB/ other source
-                return _.find(books, { id: args.id })
+                return _.find(books, { id: args.id });
+            }
+        },
+        authors: {
+            type: new GraphQLList(AuthorType),
+            resolve(parent, args) {
+                return authors;
             }
         },
         author: {
@@ -60,7 +89,7 @@ const RootQuery = new GraphQLObjectType({
                 id: { type: GraphQLID }
             },
             resolve(parent, args) {
-                return _.find(authors, { id: args.id })
+                return _.find(authors, { id: args.id });
             }
         }
     }
