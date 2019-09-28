@@ -6,21 +6,21 @@ const {
     GraphQLString,
     GraphQLID,
     GraphQLInt,
-    GraphQLSchema} = graphql;
+    GraphQLSchema } = graphql;
 
 // Dummy data
 const books = [
-    {name:'Immortals of Meluha', genre:'fiction', id:'1'},
-    {name:'The Secret', genre:'personal development', id:'2'},
-    {name:'blah blah', genre:'brruuuuu', id:'3'},
-    {name:'blooh blooh', genre:'trruuuuu', id:'4'},
+    { name: 'Immortals of Meluha', genre: 'fiction', id: '1' },
+    { name: 'The Secret', genre: 'personal development', id: '2' },
+    { name: 'blah blah', genre: 'brruuuuu', id: '3' },
+    { name: 'blooh blooh', genre: 'trruuuuu', id: '4' },
 ];
 
 const authors = [
-    {name: 'Amish Tripathi', age: 30, id: '1'},
-    {name: 'Rhonda Byrnes', age: 40, id: '2'},
-    {name: 'Nandan Grover', age: 23, id: '3'},
-    {name: 'Amit Mondal', age: 23, id: '4'}
+    { name: 'Amish Tripathi', age: 30, id: '1' },
+    { name: 'Rhonda Byrnes', age: 40, id: '2' },
+    { name: 'Nandan Grover', age: 23, id: '3' },
+    { name: 'Amit Mondal', age: 23, id: '4' }
 ];
 
 const BookType = new GraphQLObjectType({
@@ -47,7 +47,7 @@ const RootQuery = new GraphQLObjectType({
         book: {
             type: BookType,
             args: {
-                id: { type: GraphQLID}
+                id: { type: GraphQLID }
             },
             resolve(parent, args) {
                 // Code to get data from DB/ other source
