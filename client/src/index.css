@@ -1,5 +1,5 @@
 body{
-  background: #eee;
+  background: #f3c623;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,14 +24,14 @@ body{
   margin: 12px;
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #880E4F;
+  border: 1px solid #10375c;
   box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
   cursor: pointer;
-  color: #880E4F;
+  color: #10375c;
 }
 
 form{
-  background: #fff;
+  background: #f3c623;
   padding: 20px;
   position: fixed;
   left: 0;
@@ -57,9 +57,9 @@ form input, form select{
 }
 
 form button{
-  color: #fff;
+  color: #f3c623;
   font-size: 2em;
-  background: #AD1457;
+  background: #844685;
   border: 0;
   padding: 0 10px;
   border-radius: 50%;
@@ -75,10 +75,10 @@ form button{
   right: 0;
   width: 40%;
   height: 100%;
-  background: #AD1457;
+  background: #844685;
   padding: 30px;
   overflow: auto;
   box-shadow: -2px -3px 5px rgba(0,0,0,0.3);
   box-sizing: border-box;
-  color: #fff;
+  color: #f3c623;
 }
