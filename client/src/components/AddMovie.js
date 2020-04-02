@@ -4,7 +4,7 @@ import flowright from 'lodash.flowright';
 
 import { getBooksQuery, getAuthorsQuery, addBookMutation } from '../queries/queries'
 
-class AddBook extends Component {
+class AddMovie extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,7 @@ class AddBook extends Component {
     }
   }
 
-  displayAuthors() {
+  displayDirectors() {
     let data = this.props.getAuthorsQuery;
 
     if (data.loading) {
@@ -38,20 +38,20 @@ class AddBook extends Component {
 
   render() {
     return (
-      <form id="add-book" onSubmit={this.submitForm.bind(this)}>
+      <form id="add-movie" onSubmit={this.submitForm.bind(this)}>
         <div className="field">
-          <label>Book name:</label>
+          <label>Movie name:</label>
           <input type="text" onChange={(e) => this.setState({ name: e.target.value })} />
         </div>
         <div className="field">
-          <label>Genre:</label>
+          <label>Rating:</label>
           <input type="text" onChange={(e) => this.setState({ genre: e.target.value })} />
         </div>
         <div className="field">
-          <label>Author:</label>
+          <label>Director:</label>
           <select onChange={(e) => this.setState({ authorId: e.target.value })}>
-            <option>Select author</option>
-            {this.displayAuthors()}
+            <option>Select director</option>
+            {this.displayDirectors()}
           </select>
         </div>
         <button>+</button>
@@ -64,4 +64,4 @@ class AddBook extends Component {
 export default flowright(
   graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
   graphql(addBookMutation, { name: "addBookMutation" })
-)(AddBook);
+)(AddMovie);

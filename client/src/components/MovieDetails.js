@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 
 import { getBookQuery } from '../queries/queries'
 
-class BookDetails extends Component {
+class MovieDetails extends Component {
 
   displayBookDetails() {
     const { book } = this.props.data;
@@ -25,7 +25,7 @@ class BookDetails extends Component {
     } else {
       return (
         <div>
-          <p>No Books Found</p>
+          <p>No Movies Found</p>
         </div>
       );
     }
@@ -33,7 +33,7 @@ class BookDetails extends Component {
 
   render() {
     return (
-      <div id="book-details">
+      <div id="movie-details">
         {this.displayBookDetails()}
       </div>
     );
@@ -48,4 +48,4 @@ export default graphql(getBookQuery, {
       }
     }
   }
-})(BookDetails);
+})(MovieDetails);
