@@ -10,17 +10,26 @@ class MovieDetails extends Component {
 
     if (movie) {
       return (
-        <div>
+        <React.Fragment>
           <h2>{movie.name}</h2>
-          <p>{movie.genre}</p>
-          <p>{movie.director.name}</p>
+          {
+            movie.imgUrl ? (
+              <img src={movie.imgUrl} />
+            ) : (
+                <small>No Image Found</small>
+              )
+          }
+          <p>Genre: {movie.genre}</p>
+          <p>Duration: {movie.duration} min</p>
+          <p>Rating: {movie.rating}</p>
+          <p>Director: {movie.director.name}</p>
           <p>All movies by director:</p>
           <ul className="other-movies">
             {
               movie.director.movie.map(item => <li key={item.id}>{item.name}</li>)
             }
           </ul>
-        </div>
+        </React.Fragment>
       );
     } else {
       return (
