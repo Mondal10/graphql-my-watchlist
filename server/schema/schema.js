@@ -1,47 +1,51 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 
-const Book = require('../models/book');
-const Author = require('../models/author');
+const Movie = require('../models/movie');
+const Director = require('../models/director');
 
 const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLID,
     GraphQLInt,
+    GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
     GraphQLSchema } = graphql;
 
-const BookType = new GraphQLObjectType({
-    name: 'Book',
+const MovieType = new GraphQLObjectType({
+    name: 'Movie',
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         genre: { type: GraphQLString },
-        author: {
-            type: AuthorType,
+        director: {
+            type: DirectorType,
             resolve(parent, args) {
-                // Parent(This Object) is BookType
-                // return _.find(authors, { id: parent.authorId });
-                return Author.findById(parent.authorId);
+                // Parent(This Object) is MovieType
+                // return _.find(directors, { id: parent.directorId });
+                return Director.findById(parent.directorId);
             }
-        }
+        },
+        imgUrl: { type: GraphQLString },
+        duration: { type: GraphQLInt },
+        rating: { type: GraphQLFloat }
     })
 });
 
-const AuthorType = new GraphQLObjectType({
-    name: 'Author',
+const DirectorType = new GraphQLObjectType({
+    name: 'Director',
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
         age: { type: GraphQLInt },
-        book: {
-            type: new GraphQLList(BookType),
+        movie: {
+            type: new GraphQLList(MovieType),
             resolve(parent, args) {
-                // Parent(This Object) is AuthorType
-                // return _.filter(books, { authorId: parent.id });
-                return Book.find({ authorId: parent.id });
+                // Parent(This Object) is DirectorType
+                // return _.filter(movies, { directorId: parent.id });
+                return Movie.find({ directorId: parent.id });
             }
         }
     })
@@ -50,39 +54,39 @@ const AuthorType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-        books: {
-            type: new GraphQLList(BookType),
+        movies: {
+            type: new GraphQLList(MovieType),
             resolve(parent, args) {
-                // return books;
-                return Book.find({}); // Return all data
+                // return movies;
+                return Movie.find({}); // Return all data
             }
         },
-        book: {
-            type: BookType,
+        movie: {
+            type: MovieType,
             args: {
                 id: { type: GraphQLID }
             },
             resolve(parent, args) {
                 // Code to get data from DB/ other source
-                // return _.find(books, { id: args.id });
-                return Book.findById(args.id);
+                // return _.find(movies, { id: args.id });
+                return Movie.findById(args.id);
             }
         },
-        authors: {
-            type: new GraphQLList(AuthorType),
+        directors: {
+            type: new GraphQLList(DirectorType),
             resolve(parent, args) {
-                // return authors;
-                return Author.find({}); // Return all data
+                // return directors;
+                return Director.find({}); // Return all data
             }
         },
-        author: {
-            type: AuthorType,
+        director: {
+            type: DirectorType,
             args: {
                 id: { type: GraphQLID }
             },
             resolve(parent, args) {
-                // return _.find(authors, { id: args.id });
-                return Author.findById(args.id);
+                // return _.find(directors, { id: args.id });
+                return Director.findById(args.id);
             }
         }
     }
@@ -91,34 +95,40 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        addBook: {
-            type: BookType,
+        addMovie: {
+            type: MovieType,
             args: {
                 name: { type: new GraphQLNonNull(GraphQLString) },
                 genre: { type: new GraphQLNonNull(GraphQLString) },
-                authorId: { type: new GraphQLNonNull(GraphQLID) }
+                directorId: { type: new GraphQLNonNull(GraphQLID) },
+                imgUrl: { type: new GraphQLNonNull(GraphQLString) },
+                duration: { type: new GraphQLNonNull(GraphQLInt) },
+                rating: { type: new GraphQLNonNull(GraphQLFloat) }
             },
             resolve(parent, args) {
-                let book = new Book({
+                let movie = new Movie({
                     name: args.name,
                     genre: args.genre,
-                    authorId: args.authorId
+                    directorId: args.directorId,
+                    imgUrl: args.imgUrl,
+                    duration: args.duration,
+                    rating: args.rating
                 });
-                return book.save();
+                return movie.save();
             }
         },
-        addAuthor: {
-            type: AuthorType,
+        addDirector: {
+            type: DirectorType,
             args: {
                 name: { type: new GraphQLNonNull(GraphQLString) },
                 age: { type: new GraphQLNonNull(GraphQLInt) }
             },
             resolve(parent, args) {
-                let author = new Author({
+                let director = new Director({
                     name: args.name,
                     age: args.age
                 });
-                return author.save();
+                return director.save();
             }
         }
     }
