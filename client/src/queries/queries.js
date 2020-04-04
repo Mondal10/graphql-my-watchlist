@@ -1,43 +1,46 @@
 import { gql } from 'apollo-boost';
 
-const getBooksQuery = gql`
+const getMoviesQuery = gql`
   {
-    books {
+    movies {
         name
         id
     }
   }
 `;
 
-const getAuthorsQuery = gql`
+const getDirectorsQuery = gql`
   {
-    authors {
+    directors {
         name
         id
     }
   }
 `;
 
-const addBookMutation = gql`
-  mutation($name: String!, $genre: String!, $authorId: ID!){
-    addBook(name:$name, genre:$genre, authorId:$authorId){
+const addMovieMutation = gql`
+  mutation($name: String!, $genre: String!, $directorId: ID!, $imgUrl: String!, $duration: Int!, $rating: Float){
+    addMovie(name:$name, genre:$genre, directorId:$directorId, imgUrl:$imgUrl, duration:$duration, rating:$rating){
       name
       id
     }
   }
 `;
 
-const getBookQuery = gql`
+const getMovieQuery = gql`
   query($id:ID){
-    book(id:$id){
+    movie(id:$id){
       id
       name
       genre
-      author {
+      imgUrl
+      duration
+      rating
+      director {
         id
         name
         age
-        book {
+        movie {
           name
           id
         }
@@ -46,4 +49,4 @@ const getBookQuery = gql`
   }
 `;
 
-export { getBooksQuery, getAuthorsQuery, addBookMutation, getBookQuery }
+export { getMoviesQuery, getDirectorsQuery, addMovieMutation, getMovieQuery }

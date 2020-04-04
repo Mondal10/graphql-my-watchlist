@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import flowright from 'lodash.flowright';
 
-import { getBooksQuery, getAuthorsQuery, addBookMutation } from '../queries/queries'
+import { getMoviesQuery, getDirectorsQuery, addMovieMutation } from '../queries/queries'
 
 class AddMovie extends Component {
   constructor(props) {
@@ -10,29 +10,29 @@ class AddMovie extends Component {
     this.state = {
       name: '',
       genre: '',
-      authorId: ''
+      directorId: ''
     }
   }
 
   displayDirectors() {
-    let data = this.props.getAuthorsQuery;
+    let data = this.props.getDirectorsQuery;
 
     if (data.loading) {
-      return (<option disabled>Loading Authors...</option>);
+      return (<option disabled>Loading Directors...</option>);
     } else {
-      return data.authors.map(author => <option key={author.id} value={author.id}>{author.name}</option>);
+      return data.directors.map(director => <option key={director.id} value={director.id}>{director.name}</option>);
     }
   }
 
   submitForm(e) {
     e.preventDefault();
-    this.props.addBookMutation({
+    this.props.addMovieMutation({
       variables: {
         name: this.state.name,
         genre: this.state.genre,
-        authorId: this.state.authorId,
+        directorId: this.state.directorId,
       },
-      refetchQueries: [{ query: getBooksQuery }]
+      refetchQueries: [{ query: getMoviesQuery }]
     });
   }
 
@@ -49,7 +49,7 @@ class AddMovie extends Component {
         </div>
         <div className="field">
           <label>Director:</label>
-          <select onChange={(e) => this.setState({ authorId: e.target.value })}>
+          <select onChange={(e) => this.setState({ directorId: e.target.value })}>
             <option>Select director</option>
             {this.displayDirectors()}
           </select>
@@ -62,6 +62,6 @@ class AddMovie extends Component {
 }
 
 export default flowright(
-  graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
-  graphql(addBookMutation, { name: "addBookMutation" })
+  graphql(getDirectorsQuery, { name: "getDirectorsQuery" }),
+  graphql(addMovieMutation, { name: "addMovieMutation" })
 )(AddMovie);

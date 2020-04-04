@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 
-import { getBookQuery } from '../queries/queries'
+import { getMovieQuery } from '../queries/queries'
 
 class MovieDetails extends Component {
 
-  displayBookDetails() {
-    const { book } = this.props.data;
+  displayMovieDetails() {
+    const { movie } = this.props.data;
 
-    if (book) {
+    if (movie) {
       return (
         <div>
-          <h2>{book.name}</h2>
-          <p>{book.genre}</p>
-          <p>{book.author.name}</p>
-          <p>All books by author:</p>
-          <ul className="other-books">
+          <h2>{movie.name}</h2>
+          <p>{movie.genre}</p>
+          <p>{movie.director.name}</p>
+          <p>All movies by director:</p>
+          <ul className="other-movies">
             {
-              book.author.book.map(item => <li key={item.id}>{item.name}</li>)
+              movie.director.movie.map(item => <li key={item.id}>{item.name}</li>)
             }
           </ul>
         </div>
@@ -34,17 +34,17 @@ class MovieDetails extends Component {
   render() {
     return (
       <div id="movie-details">
-        {this.displayBookDetails()}
+        {this.displayMovieDetails()}
       </div>
     );
   }
 }
 
-export default graphql(getBookQuery, {
+export default graphql(getMovieQuery, {
   options: (props) => {
     return {
       variables: {
-        id: props.bookId
+        id: props.movieId
       }
     }
   }
