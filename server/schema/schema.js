@@ -9,6 +9,7 @@ const {
     GraphQLString,
     GraphQLID,
     GraphQLInt,
+    GraphQLFloat,
     GraphQLList,
     GraphQLNonNull,
     GraphQLSchema } = graphql;
@@ -26,7 +27,10 @@ const MovieType = new GraphQLObjectType({
                 // return _.find(directors, { id: parent.directorId });
                 return Director.findById(parent.directorId);
             }
-        }
+        },
+        imgUrl: { type: GraphQLString },
+        duration: { type: GraphQLInt },
+        rating: { type: GraphQLFloat }
     })
 });
 
@@ -96,13 +100,19 @@ const Mutation = new GraphQLObjectType({
             args: {
                 name: { type: new GraphQLNonNull(GraphQLString) },
                 genre: { type: new GraphQLNonNull(GraphQLString) },
-                directorId: { type: new GraphQLNonNull(GraphQLID) }
+                directorId: { type: new GraphQLNonNull(GraphQLID) },
+                imgUrl: { type: new GraphQLNonNull(GraphQLString) },
+                duration: { type: new GraphQLNonNull(GraphQLInt) },
+                rating: { type: new GraphQLNonNull(GraphQLFloat) }
             },
             resolve(parent, args) {
                 let movie = new Movie({
                     name: args.name,
                     genre: args.genre,
-                    directorId: args.directorId
+                    directorId: args.directorId,
+                    imgUrl: args.imgUrl,
+                    duration: args.duration,
+                    rating: args.rating
                 });
                 return movie.save();
             }
