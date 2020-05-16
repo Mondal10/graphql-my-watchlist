@@ -14,7 +14,7 @@ class MovieDetails extends Component {
           <h2>{movie.name}</h2>
           {
             movie.imgUrl ? (
-              <img src={movie.imgUrl} />
+              <img src={movie.imgUrl} alt={`${movie.name}`} />
             ) : (
                 <small>No Image Found</small>
               )
