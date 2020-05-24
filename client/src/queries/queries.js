@@ -19,7 +19,7 @@ const getDirectorsQuery = gql`
 `;
 
 const addMovieMutation = gql`
-  mutation($name: String!, $genre: String!, $directorId: ID!, $imgUrl: String!, $duration: Int!, $rating: Float){
+  mutation($name: String!, $genre: String!, $directorId: ID!, $imgUrl: String!, $duration: Int!, $rating: Float!){
     addMovie(name:$name, genre:$genre, directorId:$directorId, imgUrl:$imgUrl, duration:$duration, rating:$rating){
       name
       id
