@@ -8,7 +8,8 @@ import AddMovie from './components/AddMovie'
 
 // apollo client setup
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql'
+  // uri: 'http://localhost:5000/graphql'
+  uri: 'https://graphql-watch-list.herokuapp.com/graphql'
 });
 
 class App extends Component {
