@@ -4,7 +4,8 @@
   "description": "server for graphql",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "node app",
+    "dev": "nodemon app"
   },
   "author": "Amit Mondal",
   "license": "ISC",
