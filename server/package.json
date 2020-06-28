@@ -12,11 +12,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^14.5.7",
+    "graphql": "^14.6.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "mongoose": "^5.7.5",
-    "nodemon": "^1.19.2"
+    "mongoose": "^5.9.20",
+    "nodemon": "^2.0.4"
   }
 }

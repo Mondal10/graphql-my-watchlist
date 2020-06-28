@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 
 // Connecting to the database
-const uri = 'mongodb://Amit:Test1234@ds263368.mlab.com:63368/graphql-amit-watch-list';
+const uri = `mongodb://${process.env.MONGO_URI}/graphql-amit-watch-list`;
 
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(uri, { useNewUrlParser: true });
@@ -26,6 +26,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 // Listen port
-app.listen(5000, () => {
-    console.log('Listening for requests on port 5000');
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Listening for requests on port ${port}`);
 });
