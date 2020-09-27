@@ -10,7 +10,8 @@ const app = express();
 app.use(cors());
 
 // Connecting to the database
-const uri = 'mongodb://Amit:test1234@ds053958.mlab.com:53958/graphql-net-ninja';
+// const uri = 'mongodb://Amit:test1234@ds053958.mlab.com:53958/graphql-net-ninja';
+const uri = 'mongodb+srv://Amit:test1234@graphql-net-ninja.vn0e5.mongodb.net/graphql-net-ninja?retryWrites=true&w=majority';
 mongoose.set('useUnifiedTopology', true);
 mongoose.connect(uri, { useNewUrlParser: true });
 
